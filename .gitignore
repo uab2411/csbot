@@ -1,1 +1,4 @@
 /venv/
+/data/config.json
+/data/prefixes.json
+/data/serverips.json
