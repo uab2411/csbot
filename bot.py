@@ -98,6 +98,13 @@ async def reload(ctx, extension):
     client.load_extension(f'cogs.{extension}')
 
 
+def get_bot_secret():
+    with open('data/config.json', 'r') as f:
+        config = json.load(f)
+
+    return config['bot_secret']
+
+
 client.load_extension('cogs.discord_server')
 client.load_extension('cogs.cs_server')
-client.run('NjkzODc5OTUxMjQ5ODk5NTIx.XoDgQQ.ezwSELug98f4dD0Syz_kEdp1N_Y')
+client.run(get_bot_secret())
