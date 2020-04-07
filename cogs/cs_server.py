@@ -1,5 +1,6 @@
 import json
 
+import discord
 from discord.ext import commands
 
 from lib.cs_server_connector import CS_Server_Connector
@@ -17,12 +18,30 @@ class CS_Server(commands.Cog):
             serverip = json.load(f)
 
         print(serverip)
-        serverip[str(ctx.guild.id)] = [ip, int(port)]
+        serverip[str(ctx.guild.id)] = {
+            "ip": ip,
+            "port": int(port),
+            "password": None
+        }
 
         with open('data/serverips.json', 'w') as f:
             json.dump(serverip, f, indent=4)
 
         await ctx.send(f'Ip changed to {[ip, port]}')
+
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def setserverpassword(self, ctx, *, password):
+        with open('data/serverips.json', 'r') as f:
+            serverip = json.load(f)
+
+        if str(ctx.guild.id) in serverip:
+            serverip[str(ctx.guild.id)]["password"] = password
+            with open('data/serverips.json', 'w') as f:
+                json.dump(serverip, f, indent=4)
+            await ctx.send(f'Password set!')
+        else:
+            await ctx.send(f'Set server ip first!')
 
     @commands.command()
     async def cscheck(self, ctx):
@@ -31,11 +50,44 @@ class CS_Server(commands.Cog):
 
         if str(ctx.guild.id) in serverips:
             serverip = serverips[str(ctx.guild.id)]
+
+            steam_link = f'steam://connect/{serverip["ip"]}'
+            steam_link = (steam_link + f':{serverip["port"]}') if serverip["port"] else steam_link
+            steam_link = (steam_link + f'/{serverip["password"]}') if serverip["password"] else steam_link
+
+            embed = discord.Embed(title="Counter Strike 1.6 active server details", color=65280,
+                                  url="http://google.com")
+            embed.set_footer(
+                text=f'Aadva banni : {steam_link}', )
+
             cscon = CS_Server_Connector(serverip)
             info = cscon.get_game_info()
-            await ctx.send(f'Server Name : {info["serv_name"]}\tCurrent Map : {info["map"]}\nPlayer Count : '
-                           f'{info["player_count"]}\tMax Players : {info["max_players"]}\nBot Count : '
-                           f'{info["bot_count"]}\tPing : {round(float(info["ping"]), 3)}')
+            players = info["players"]
+
+            embed.add_field(name="Server Name", value=info["serv_name"])
+            embed.add_field(name="Current Map", value=info["map"])
+            embed.add_field(name="Ping", value=round(float(info["ping"]), 3))
+            embed.add_field(name="Player Count", value=info["player_count"])
+            embed.add_field(name="Max Players", value=info["max_players"])
+            embed.add_field(name="Bot Count", value=info["bot_count"])
+
+            if len(players) > 0:
+                name = ""
+                score = ""
+                time = ""
+                for player in players:
+                    name += player.name + '\n'
+                    score += str(player.score) + '\n'
+                    time += str(int(player.duration / 60)) + ' min \n'
+                embed.add_field(name="Player Name", value=name[:-1])
+                embed.add_field(name="Score", value=score[:-1])
+                embed.add_field(name="Playing since", value=time[:-1])
+
+            embed.add_field(name="Link to connect", value=steam_link, inline=False)
+
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(f'Set server ip first!')
 
 
 def setup(client):
