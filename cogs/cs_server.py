@@ -55,10 +55,9 @@ class CS_Server(commands.Cog):
             steam_link = (steam_link + f':{serverip["port"]}') if serverip["port"] else steam_link
             steam_link = (steam_link + f'/{serverip["password"]}') if serverip["password"] else steam_link
 
-            embed = discord.Embed(title="Counter Strike 1.6 active server details", color=65280,
-                                  url="http://google.com")
+            embed = discord.Embed(title="Counter Strike 1.6 active server details", color=65280)
             embed.set_footer(
-                text=f'Aadva banni : {steam_link}', )
+                text='Git : https://github.com/uab2411/csbot')
 
             cscon = CS_Server_Connector(serverip)
             info = cscon.get_game_info()
