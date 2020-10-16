@@ -111,5 +111,5 @@ def get_bot_secret():
 
 client.load_extension('cogs.discord_server')
 client.load_extension('cogs.csgo_server')
-client.load_extension('cogs.coronavirus')
+#client.load_extension('cogs.coronavirus')
 client.run(get_bot_secret())
