@@ -11,7 +11,7 @@ class Discord_Server(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-        self.send_reminder.start()
+        # self.send_reminder.start()
 
     @commands.command(aliases=['banni', 'aadva'])
     async def yodhare(self, ctx):
@@ -59,25 +59,25 @@ class Discord_Server(commands.Cog):
 
         await ctx.send(f'Reminder set for {x} to - {message}')
 
-    @tasks.loop(seconds=5)
-    async def send_reminder(self):
-        print('Entered')
-        with open('data/config.json', 'r') as f:
-            config = json.load(f)
-        reminders = config["reminder"]
-        for reminder in reminders:
-            pass
+    # @tasks.loop(seconds=5)
+    # async def send_reminder(self):
+    #     print('Entered')
+    #     with open('data/config.json', 'r') as f:
+    #         config = json.load(f)
+    #     reminders = config["reminder"]
+    #     for reminder in reminders:
+    #         pass
         # await self.client.change_presence(activity=discord.Game(next(status)))
 
-    @tasks.loop(seconds=5)
-    async def send_reminder(self):
-        berlin = pytz.timezone('Europe/Berlin')
-        with open('data/config.json', 'r') as f:
-            config = json.load(f)
-        reminders = config["reminder"]
-        for reminder in reminders:
-            alarm = datetime.datetime.utctimetuple(berlin.localize(time1))
-            pass
+    # @tasks.loop(seconds=5)
+    # async def send_reminder(self):
+    #     berlin = pytz.timezone('Europe/Berlin')
+    #     with open('data/config.json', 'r') as f:
+    #         config = json.load(f)
+    #     reminders = config["reminder"]
+    #     for reminder in reminders:
+    #         alarm = datetime.datetime.utctimetuple(berlin.localize(time1))
+    #         pass
 
 def setup(client):
     client.add_cog(Discord_Server(client))
