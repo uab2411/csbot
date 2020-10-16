@@ -4,7 +4,7 @@ import valve.rcon
 import discord
 from discord.ext import commands
 
-from lib.cs_server_connector import CS_Server_Connector
+#from lib.cs_server_connector import CS_Server_Connector
 
 
 class CS_Server(commands.Cog):
@@ -61,7 +61,6 @@ class CS_Server(commands.Cog):
             server_address = (ip,int(port))
             try:
                 with valve.rcon.RCON(server_address, password) as rcon:
-                    print(rcon.connected)
                     rcon.execute('bot_kick')
                     await ctx.send(f'Bots kicked! Enjoy!!')
             except(Exception):
@@ -84,7 +83,6 @@ class CS_Server(commands.Cog):
             server_address = (ip,int(port))
             try:
                 with valve.rcon.RCON(server_address, password) as rcon:
-                    print(rcon.connected)
                     rcon.execute(command)
                     await ctx.send(f'Command Executed!')
             except(Exception):
