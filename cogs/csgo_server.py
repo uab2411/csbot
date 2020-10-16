@@ -12,7 +12,7 @@ class CS_Server(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    def get_server_details(self):
+    #def get_server_details(self):
 
 
     @commands.command()
