@@ -1,0 +1,35 @@
+{
+  "workshop_maps": {
+    "de_coastal": 2262134113,
+    "de_reberth_halloween": 2260384863,
+    "de_kabul_b3": 232135055,
+    "de_aztec_2": 2012803116,
+    "ravine": 2257823084
+  },
+  "default_maps": [
+    "cs_italy",
+    "cs_office",
+    "de_aztec",
+    "de_dust2",
+    "de_inferno",
+    "de_nuke",
+    "de_shorttrain",
+    "ar_baggage",
+    "ar_shoots",
+    "de_bank",
+    "de_lake",
+    "de_safehouse",
+    "de_sugarcane",
+    "de_stmarc",
+    "de_train",
+    "de_shortdust",
+    "de_canals",
+    "de_cache",
+    "de_swamp",
+    "de_anubis",
+    "de_mutiny",
+    "de_swamp",
+    "de_cbble",
+    "de_vertigo"
+  ]
+}

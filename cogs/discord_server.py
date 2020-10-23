@@ -13,12 +13,12 @@ class Discord_Server(commands.Cog):
 
         # self.send_reminder.start()
 
-    @commands.command(aliases=['banni', 'aadva'])
-    async def yodhare(self, ctx):
-        await ctx.send('''**Aadlikke banni!!**
-        Click and Connect-
-        steam://connect/173.199.107.90:27045/munichabc
-        ''')
+    # @commands.command(aliases=['banni', 'aadva'])
+    # async def yodhare(self, ctx):
+    #     await ctx.send('''**Aadlikke banni!!**
+    #     Click and Connect-
+    #     steam://connect/173.199.107.90:27045/munichabc
+    #     ''')
 
     # @commands.command()
     # async def kick(self, ctx, member : discord.Member, *, reason=None):
