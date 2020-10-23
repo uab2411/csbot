@@ -5,7 +5,7 @@ class CS_Server_Connector():
 
     def __init__(self, serverip):
         self.server_ip = serverip["ip"]
-        self.server_port = serverip["port"]
+        self.server_port = int(serverip["port"])
         self.address = (self.server_ip, self.server_port)
 
     def get_game_info(self):
