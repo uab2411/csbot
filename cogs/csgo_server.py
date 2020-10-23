@@ -46,7 +46,14 @@ class CS_Server(commands.Cog):
         else:
             return -1, None
 
-
+    async def send_status(self,ctx,success,error,success_msg,fail_msg):
+        if success == 1:
+            await ctx.send(success_msg)
+        elif success == 0:
+            print(error)
+            await ctx.send(fail_msg)
+        else:
+            await ctx.send(f'Set server ip first!')
 
     @commands.command()
     @commands.has_permissions(administrator=True)
@@ -92,30 +99,67 @@ class CS_Server(commands.Cog):
         guild_id = str(ctx.guild.id)
         command = "bot_kick"
         success, error = self.console_command(guild_id,command)
-        if success == 1:
-            await ctx.send(f'Bots kicked! Enjoy!')
-        elif success == 0:
-            print(error)
-            await ctx.send(f'Something went wrong!')
-        else:
-            await ctx.send(f'Set server ip first!')
+        success_msg = 'Bots kicked! Enjoy!'
+        fail_msg = 'Something went wrong!'
+        await self.send_status(ctx,success,error,success_msg,fail_msg)
 
 
     @commands.command()
     async def console(self, ctx,*,command):
         guild_id = str(ctx.guild.id)
         success, error = self.console_command(guild_id, command)
-        if success == 1:
-            await ctx.send(f'Command Executed!')
-        elif success == 0:
-            print(error)
-            await ctx.send(f'Something went wrong!')
+        success_msg = 'Command Executed!'
+        fail_msg = 'Something went wrong!'
+        await self.send_status(ctx,success,error,success_msg,fail_msg)
+
+
+    @commands.command()
+    async def maplist(self, ctx):
+        embed = discord.Embed(title="CSGO Maps List", color=65280)
+        embed.description = "To change map, send-\n.map mapname"
+        embed.set_footer(
+            text='Git : https://github.com/uab2411/csbot')
+
+        for i,_map in enumerate(self.default_maps):
+            embed.add_field(name=i+1,value = _map)
+
+        # embed.add_field(name="Maps",value=map_str)
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    async def wsmaplist(self, ctx):
+        embed = discord.Embed(title="CSGO Workshop Maps List", color=65280)
+        embed.description = "To start Workshop map, send-\n.wsmap mapname"
+        embed.set_footer(
+            text='Git : https://github.com/uab2411/csbot')
+
+        # for i, _map in enumerate(list(self.workshop_maps.keys())):
+        #     embed.add_field(name=i + 1, value=_map)
+
+        embed.add_field(name="Maps",value="\n".join(list(self.workshop_maps.keys())))
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    async def wsmap(self, ctx, mapname):
+        guild_id = str(ctx.guild.id)
+        map_id = self.workshop_maps.get(mapname,0)
+        if map_id:
+            command = "host_workshop_map " + str(map_id)
+            success, error = self.console_command(guild_id, command)
+            success_msg = 'Map Changed!'
+            fail_msg = 'Something went wrong!'
+            await self.send_status(ctx, success, error, success_msg, fail_msg)
         else:
-            await ctx.send(f'Set server ip first!')
+            await ctx.send("Map not available. Send a link to the map, to add it!!")
 
-    # @commands.command()
-    # async def maplist(self, ctx):
-
+    @commands.command()
+    async def map(self, ctx, mapname):
+        guild_id = str(ctx.guild.id)
+        command = "changelevel " + mapname
+        success, error = self.console_command(guild_id, command)
+        success_msg = 'Map Changed!'
+        fail_msg = 'Something went wrong!'
+        await self.send_status(ctx, success, error, success_msg, fail_msg)
 
     @commands.command()
     async def csgocheck(self, ctx):
