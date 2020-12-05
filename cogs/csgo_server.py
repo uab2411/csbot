@@ -75,7 +75,7 @@ class CS_Server(commands.Cog):
     async def setrconpassword(self, ctx, *, password):
 
         if str(ctx.guild.id) in self.serverips:
-            self.serverips[str(ctx.guild.id)]["srv_password"] = password
+            self.serverips[str(ctx.guild.id)]["password"] = password
             with open('data/serverips.json', 'w') as f:
                 json.dump(self.serverips, f, indent=4)
             await ctx.send(f'Rcon password set!')
@@ -87,7 +87,7 @@ class CS_Server(commands.Cog):
     async def setsrvpassword(self, ctx, *, password):
 
         if str(ctx.guild.id) in self.serverips:
-            self.serverips[str(ctx.guild.id)]["password"] = password
+            self.serverips[str(ctx.guild.id)]["srv_password"] = password
             with open('data/serverips.json', 'w') as f:
                 json.dump(self.serverips, f, indent=4)
             await ctx.send(f'Server Password set!')
