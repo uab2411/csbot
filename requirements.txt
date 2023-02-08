@@ -7,7 +7,7 @@ cffi==1.14.0
 chardet==3.0.4
 constantly==15.1.0
 corona-api==0.5.0
-cryptography==3.3.2
+cryptography==39.0.1
 cssselect==1.1.0
 decorator==4.4.2
 discord.py==1.5.0
